@@ -16,12 +16,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class AppiumBase {
 
     protected static final Logger logger = LogManager.getLogger(AppiumBase.class);
     private AppiumDriver<MobileElement> driver;
+    protected static ThreadLocal <HashMap<String, String>> strings = new ThreadLocal<HashMap<String, String>>();
 
     DesiredCapabilities cap = new DesiredCapabilities();
     public void setup() throws MalformedURLException {
@@ -108,6 +110,12 @@ public class AppiumBase {
     }
 
 
+
+
+
+    public HashMap<String, String> getStrings() {
+        return strings.get();
+    }
 
     public void tearDown() {
         if (driver != null) {

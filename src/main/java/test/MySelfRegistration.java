@@ -48,7 +48,7 @@ public class MySelfRegistration extends AppiumBase {
                 "to get in touch.", sp.startPageMiniTitle.getText());
         TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("Text below title is : " + sp.startPageMiniTitle.getText());
-        softAssert.assertEquals("I will send you a text with a verification code.", sp.verificationText.getText());
+        softAssert.assertEquals(sp.verificationText.getText(), getStrings().get("Verification_Code") );
         TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("VerificationCode Text below Enter Mobile Field is " + sp.verificationText.getText());
 
@@ -64,7 +64,7 @@ public class MySelfRegistration extends AppiumBase {
         log.continuebutton();
         Thread.sleep(4000);
         try {
-            softAssert.assertEquals("By login in you agree to my 'Terms' and 'Privacy Policy'", sp.privacyPolicyText.getText());
+            softAssert.assertEquals(sp.privacyPolicyText.getText(), getStrings().get("Terms"));
             TestListener.handleSoftAssertions(softAssert);
             TestListener.logToExtentReport("Assertion Passed");
         } catch (AssertionError e) {
