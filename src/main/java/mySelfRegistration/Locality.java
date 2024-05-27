@@ -1,11 +1,13 @@
 package mySelfRegistration;
 
+import base.TestListener;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.mac.Mac2Element;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class Locality {
     public AppiumDriver<MobileElement> driver;
@@ -20,7 +22,7 @@ public class Locality {
     @AndroidFindBy(id = "com.commonfriend:id/infoMessage")
     public MobileElement FifthPagePrivacyText;
     @AndroidFindBy(id = "com.commonfriend:id/txtQuestion")
-    public MobileElement FifthPageQueTitle;
+    public MobileElement SixthPageQueTitle;
     @AndroidFindBy(id = "com.commonfriend:id/txtLocationName")
     public MobileElement LocalityPlaceHolder;
     @AndroidFindBy(id = "com.commonfriend:id/btnSkip")
@@ -32,6 +34,16 @@ public class Locality {
     public MobileElement SelectGota;
     @AndroidFindBy(id = "com.commonfriend:id/btnDialogContinue")
     public MobileElement btncontinue;
+
+    @AndroidFindBy(id = "com.commonfriend:id/txtHomeTown")
+    private List<MobileElement> suggestionTextViews;
+
+    public void printSuggestedLocalities() {
+        for (MobileElement suggestion : suggestionTextViews) {
+            System.out.println(suggestion.getText());
+            TestListener.logToExtentReport("Suggested Localities : "+suggestion.getText());
+        }
+    }
 
     public String expectedlocalityQueText="What is your locality?";
     public String expectedlocalityPlaceHolderText="Select your locality";

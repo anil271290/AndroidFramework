@@ -17,7 +17,7 @@ public class Gotra {
     @AndroidFindBy(id = "com.commonfriend:id/txtQuestion")
     public MobileElement GotraPageQue;
 
-    @AndroidFindBy(id = "com.commonfriend:id/txtLocationName")
+    @AndroidFindBy(id = "com.commonfriend:id/edtFirstName")
     public MobileElement GotraPlaceHolder;
     @AndroidFindBy(id = "com.commonfriend:id/txtTitle")
     public MobileElement GotraPageHeader;
@@ -31,12 +31,11 @@ public class Gotra {
     @AndroidFindBy(xpath = "//*[contains(@text, 'What gotra')]")
     public MobileElement validationgotra;
 
-    @AndroidFindBy(id = "com.commonfriend:id/edtSearch")
-    public MobileElement EditSearch;
+
 
 
     public String expectedGotraQueTitle="What gotra do you belong to??";
-    public String expectedDropDownPlaceHolder="Select your gotra";
+    public String expectedDropDownPlaceHolder="Write your gotra here";
 
     public String expectedGotraPagePrivacyText="This information will not be\n" +
             "shown to references";

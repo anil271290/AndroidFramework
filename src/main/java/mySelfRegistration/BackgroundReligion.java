@@ -1,5 +1,6 @@
 package mySelfRegistration;
 
+import base.TestListener;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidBy;
@@ -27,29 +28,17 @@ public class BackgroundReligion {
     public MobileElement religionPageQueTitle;
     @AndroidFindBy(xpath = "//*[@resource-id=\"com.commonfriend:id/txtLocationName\"]")
     public MobileElement dropDownPlaceHolderText;
-    @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/*")
-    public MobileElement allReligionXpath;
+
     @AndroidFindBy(xpath = "//*[@resource-id='com.commonfriend:id/btnCancel']")
     public MobileElement downArrowButton;
 
-    @AndroidFindBy(id = "com.commonfriend:id/txtLocationName")
-    public MobileElement selectreligion;
-    //Jain, Christian, Sikh, Parsi, Buddhist, Jewish, Spiritual, Not religious
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Hindu']")
     public MobileElement tickreligion;
   /*  @AndroidFindBy(xpath = "//android.widget.TextView[@text='Muslim']")
     public MobileElement tickreligion;
 */
 
-    @AndroidFindAll(@AndroidBy(xpath = "//*[@resource-id='com.commonfriend:id/txtLocation']"))
-    public static List<MobileElement> AllReligion;
 
-
-    public void getReligionText() {
-        for (MobileElement Religions : AllReligion) {
-            System.out.println(Religions.getText());
-        }
-    }
 
 
     public BackgroundReligion(AppiumDriver<MobileElement> driver) {
@@ -61,5 +50,16 @@ public class BackgroundReligion {
     public String expectedBackgroundHomeScreenTimerText = "Should take about 30 seconds.";
     public String expectedReligionScreenText = "What religion do you follow?";
     public String expectedReligionPlaceHolderText = "Add religion";
+
+
+    @AndroidFindBy(id = "com.commonfriend:id/txtLocation")
+    private List<MobileElement> religionTextViews;
+
+    public void printAllReligions() {
+        for (MobileElement religion : religionTextViews) {
+            System.out.println(religion.getText());
+            TestListener.logToExtentReport("All religion are :"+religion.getText());
+        }
+    }
 
 }

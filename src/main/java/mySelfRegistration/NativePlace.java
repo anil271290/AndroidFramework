@@ -24,11 +24,14 @@ public class NativePlace {
     public MobileElement NativePrivacyText;
     @AndroidFindBy(id = "com.commonfriend:id/edtSearch")
     public MobileElement EditSearch;
-    @AndroidFindBy(xpath = "//*[contains(@text,'Gota, Ahmedabad, Gujarat, India')]")
+    @AndroidFindBy(xpath = "//*[contains(@text,'Gota, Ahmedabad, Gujarat')]")
     public MobileElement Gota;
 
     @AndroidFindBy(id = "com.commonfriend:id/btnDialogContinue")
     public MobileElement ContinueBtn;
+
+
+    public String expectedNativePlaceHolder="Select your native place";
 
 
 }

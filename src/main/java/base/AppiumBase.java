@@ -8,10 +8,17 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -24,6 +31,36 @@ public class AppiumBase {
     protected static final Logger logger = LogManager.getLogger(AppiumBase.class);
     private AppiumDriver<MobileElement> driver;
     protected static ThreadLocal <HashMap<String, String>> strings = new ThreadLocal<HashMap<String, String>>();
+    public AppiumBase() {
+        if (strings.get() == null) {
+            strings.set(loadStrings());
+        }
+    }
+
+    private HashMap<String, String> loadStrings() {
+        HashMap<String, String> stringMap = new HashMap<>();
+        try {
+            InputStream is = getClass().getClassLoader().getResourceAsStream("String/strings.xml");
+            if (is != null) {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document doc = builder.parse(is);
+                NodeList nodeList = doc.getElementsByTagName("string");
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    String key = nodeList.item(i).getAttributes().getNamedItem("name").getNodeValue();
+                    String value = nodeList.item(i).getTextContent();
+                    stringMap.put(key, value);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Error loading strings.xml", e);
+        }
+        return stringMap;
+    }
+
+    public HashMap<String, String> getStrings() {
+        return strings.get();
+    }
 
     DesiredCapabilities cap = new DesiredCapabilities();
     public void setup() throws MalformedURLException {
@@ -110,12 +147,16 @@ public class AppiumBase {
     }
 
 
-
-
-
-    public HashMap<String, String> getStrings() {
-        return strings.get();
+    public boolean isElementDisplayed(MobileElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
+
+
+
 
     public void tearDown() {
         if (driver != null) {

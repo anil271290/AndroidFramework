@@ -21,10 +21,7 @@ public class BackgroundEatingHabit {
     public MobileElement SixthPageNo;
     @AndroidFindBy(xpath = "//*[@text='Visible to your recommendations only']")
     public MobileElement EatingPrivacyText;
-    @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/*")
-    public List<MobileElement> allEatHabitsXpath;
-    @AndroidFindByAllSet(value = {@AndroidFindAll(value = {@AndroidBy(xpath = "//androidx.recyclerview.widget.RecyclerView/*")})})
-    public static List<MobileElement> allEatHabits;
+
 
 
     public BackgroundEatingHabit(AppiumDriver<MobileElement> driver) {
@@ -36,12 +33,13 @@ public class BackgroundEatingHabit {
         ehabit.click();
     }
 
-    public  List<String> getEatHabitTexts() {
-        List<String> HabitTexts = new ArrayList<>();
-        for (MobileElement element : allEatHabits) {
-            HabitTexts.add(element.getText());
+    @AndroidFindBy(id = "com.commonfriend:id/txtOption")
+    List<MobileElement> eatingHabitOptions;
+
+    public void getEatHabitTexts() {
+        for (MobileElement option : eatingHabitOptions) {
+            System.out.println(option.getText());
         }
-        return HabitTexts;
     }
 
 }

@@ -2,12 +2,17 @@ package mySelfRegistration;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.pagefactory.*;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,4 +92,46 @@ public class BackgroundCulture {
     public String expectedCultureQueText="Which cultures do you identify with?";
 
     public String expectedCulturePlaceHolderText="Add cultures";
+
+    @AndroidFindBy(id = "com.commonfriend:id/rvLocation")
+    private MobileElement cultureList;
+
+    @AndroidFindBy(id = "com.commonfriend:id/txtCulture")
+    private List<MobileElement> cultureItems;
+
+    public void selectFirstFiveCultures() {
+        for (int i = 0; i < 5 && i < cultureItems.size(); i++) {
+            cultureItems.get(i).click();
+        }
+    }
+
+    public void printAllCultures() {
+        boolean moreItems = true;
+        while (moreItems) {
+            for (MobileElement culture : cultureItems) {
+                System.out.println(culture.getText());
+            }
+            moreItems = scrollAndLoadMore();
+        }
+    }
+
+    public boolean scrollAndLoadMore() {
+        Dimension size = driver.manage().window().getSize();
+        int startY = (int) (size.height * 0.8);
+        int endY = (int) (size.height * 0.2);
+        int startX = size.width / 2;
+
+        new TouchAction<>(driver)
+                .press(PointOption.point(startX, startY))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+                .moveTo(PointOption.point(startX, endY))
+                .release()
+                .perform();
+
+        // Check if new items are loaded
+        // Implement logic to verify if more items are loaded
+        return true; // Return true if more items are loaded, false otherwise
+    }
+
+
 }

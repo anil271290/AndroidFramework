@@ -15,10 +15,10 @@ public class CurrentLocation {
     @AndroidFindBy(id = "com.commonfriend:id/txtTagLine")
     public MobileElement CurrentLocationHomeScreenText;
 
-    @AndroidFindBy(id = "com.android.permissioncontroller:id/permission_allow_foreground_only_button")
+    @AndroidFindBy(id = "com.android.packageinstaller:id/permission_allow_button")
     public MobileElement gps;
 
-    @AndroidFindBy(id = "com.android.permissioncontroller:id/permission_deny_button")
+    @AndroidFindBy(id = "com.android.packageinstaller:id/permission_deny_button")
     public MobileElement permissionDeny;
     @AndroidFindBy(xpath = "//*[@text='Approximate']")
     public MobileElement approxRadioImage;
