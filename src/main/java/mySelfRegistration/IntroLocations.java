@@ -153,7 +153,7 @@ public class IntroLocations {
         int startY = (int) (size.height * 0.8);
         int endY = (int) (size.height * 0.2);
 
-        TouchAction touchAction = new TouchAction(driver);
+        TouchAction<?> touchAction = new TouchAction<>(driver);
         touchAction.press(PointOption.point(startX, startY))
                 .waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000)))
                 .moveTo(PointOption.point(startX, endY))

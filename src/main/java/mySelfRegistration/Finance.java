@@ -7,27 +7,27 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class Finance {
     public AppiumDriver<MobileElement> driver;
 
     @AndroidFindBy(id = "btnAdd")
     public MobileElement enterfinance;
-    @AndroidFindBy(xpath = "//*[@text='Money matters! Lets discuss it.']")
+    @AndroidFindBy(id = "com.commonfriend:id/txtTagLine")
     public MobileElement FinanceHomeScreenTitle;
-    @AndroidFindBy(xpath = "//*[@text='Should take about 30 seconds.']")
+    @AndroidFindBy(id = "com.commonfriend:id/txtBottomTagLine")
     public MobileElement TimeInfoText;
-    @AndroidFindBy(xpath = "//*[@text='Finances']")
+    @AndroidFindBy(id = "com.commonfriend:id/txtTitle")
     public MobileElement FinanceScreenHeaderTitle;
-    @AndroidFindBy(xpath = "//*[@text=\"What's your line of work?\"]")
+    @AndroidFindBy(xpath = "//*[contains(@text,'your line of')]")
     public MobileElement FinanceFirstScreenQueTitle;
-    @AndroidFindBy(xpath = "//*[@text='1/3']")
+    @AndroidFindBy(id = "com.commonfriend:id/txtPageNO")
     public MobileElement FirstPageNo;
     @AndroidFindBy(id = "txtLocationName")
     public MobileElement work;
-    @AndroidFindBy(xpath = "//*[@text='Select line of work']")
+    @AndroidFindBy(xpath = "//*[contains(@text,'Select line')]")
     public MobileElement DropDownPlaceHolderText;
-    @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView/*")
-    public MobileElement AllWorksXpath;
     @AndroidFindBy(xpath = "//*[@text='Student']")
     public MobileElement verifyText;
     @AndroidFindBy(xpath = "//*[@text='2/3']")
@@ -38,7 +38,7 @@ public class Finance {
     public MobileElement Finance2ndPrivacyText;
     @AndroidFindBy(xpath = "//*[@text='Visible to yourself only']")
     public MobileElement Finance3rdPrivacyText;
-    @AndroidFindBy(xpath = "//*[@text='How much money do you make in a year?']")
+    @AndroidFindBy(xpath = "//*[contains(@text,'in a year')]")
     public MobileElement finance2ndscreenQueTitle;
     @AndroidFindBy(xpath = "//*[@text=\"What is your family's net worth?\"]")
     public MobileElement finance3rdscreenQueTitle;
@@ -67,7 +67,7 @@ public class Finance {
     public MobileElement dotbutton;
     @AndroidFindBy(xpath = "//*[@text='About Net worth']")
     public MobileElement DialogBoxHeaderText;
-    @AndroidFindBy(xpath = "//android.widget.LinearLayout/*[2]/*[2]")
+    @AndroidFindBy(xpath = "//android.widget.LinearLayout/*[2]")
     public MobileElement DialogBoxTexts;
 
 
@@ -100,4 +100,19 @@ public class Finance {
     public void dotBtnPlusMinus(String key){
         dotbutton.sendKeys(key);
     }
+
+    @AndroidFindBy(xpath = "//*[contains(@resource-id, 'com.commonfriend:id/txtLocation')]")
+    List<MobileElement> workOptions;
+
+    // Method to print all work options
+    public void printWorkOptions() {
+        for (MobileElement option : workOptions) {
+            System.out.println(option.getText());
+        }
+    }
+
+
+
+    public String expectedYearMoneyQue="How much money do you make in a year?";
+
 }

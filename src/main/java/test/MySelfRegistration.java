@@ -108,8 +108,8 @@ public class MySelfRegistration extends AppiumBase {
         softAssert.assertEquals(name.firstPageQueTitle.getText(), name.expectedFirstPageQueTitle);
         TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("Introduction 1st page question : " + name.firstPageQueTitle.getText());
-        name.enterfirstname("Juhi");
-        name.enterlastname("Sharma");
+        name.enterfirstname("Raghav");
+        name.enterlastname("Pandey");
         softAssert.assertEquals(name.privacyText.getText(), getStrings().get("name"));
         TestListener.handleSoftAssertions(softAssert);
         takeScreenshot("Name");
@@ -239,10 +239,10 @@ public class MySelfRegistration extends AppiumBase {
         takeScreenshot("MultiLocations");
         // il.selectlocat();
         il.clickFirstSixLocations();
-        Set<String> allLocations = il.getAllLocations();
+       /* Set<String> allLocations = il.getAllLocations();
         for (String location : allLocations) {
             System.out.println(location);
-        }
+        }*/
         takeScreenshot("Locations selected");
         il.conbutton.click();
         softAssert.assertAll();
@@ -262,14 +262,14 @@ public class MySelfRegistration extends AppiumBase {
         takeScreenshot("Relationship");
         ir.relationst();
 
-        if (!isElementDisplayed(ir.validationKids)) {
-
-            TestListener.logToExtentReport("Kids Page is not available for selected criteria");
-        } else {
+        if (isElementDisplayed(ir.validationKids)) {
             takeScreenshot("Kids Page");
             softAssert.assertEquals(ir.kidsQueTitle.getText(), ir.expectedKidsQueText);
             TestListener.handleSoftAssertions(softAssert);
             ir.Nokids.click();
+
+        } else {
+            TestListener.logToExtentReport("Kids Page is not available for selected criteria");
         }
 
         softAssert.assertAll();
@@ -317,7 +317,7 @@ public class MySelfRegistration extends AppiumBase {
         bc.dropDownPlaceHolderText.click();
         //  bc.tickculture();
         bc.selectFirstFiveCultures();
-        bc.printAllCultures();
+       // bc.printAllCultures();
         takeScreenshot("cultures");
         bc.cltrcontinu();
         softAssert.assertAll();
@@ -341,7 +341,7 @@ public class MySelfRegistration extends AppiumBase {
             cs.CastePlaceHolder.click();
             takeScreenshot("Select caste");
             cs.FirstCaste.click();
-            cs.BtnContinue.click();
+
 
 
         } else {
@@ -456,9 +456,12 @@ public class MySelfRegistration extends AppiumBase {
 
 
         ut.waitForElementToBeVisible(ht.HeightScreenQueTitle);
+        softAssert.assertEquals(ht.HeightScreenQueTitle.getText(),ht.expectedHeightQue);
+        TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("Height Screen Question Title is : " + ht.HeightScreenQueTitle.getText());
         TestListener.logToExtentReport("Privacy text is : " + ht.heightPrivacyText.getText());
         softAssert.assertTrue(ht.HeightContainerText.isDisplayed(), "Text not displayed");
+        TestListener.handleSoftAssertions(softAssert);
         takeScreenshot("Scroll Height");
         Utils.tapElementMultipleTimes(ht.InchXpath, 8);
         takeScreenshot("Height selected");
@@ -501,7 +504,7 @@ public class MySelfRegistration extends AppiumBase {
 
     }
 
-    @Test(priority = 14, description = "Finance")
+    @Test(priority = 21, description = "Finance")
     public void money() throws InterruptedException {
         Finance fc = new Finance(getAppiumDriver());
         Utils ut = new Utils(getAppiumDriver());
@@ -509,7 +512,7 @@ public class MySelfRegistration extends AppiumBase {
 
 
         ut.waitForElementToBeVisible(fc.FinanceHomeScreenTitle);
-        softAssert.assertEquals("Money matters! Lets discuss it.", fc.FinanceHomeScreenTitle.getText());
+        softAssert.assertEquals( fc.FinanceHomeScreenTitle.getText(), getStrings().get("Finances"));
         TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("Finance HomeScreen Title : " + fc.FinanceHomeScreenTitle.getText());
         TestListener.logToExtentReport("Timing Msg is :" + fc.TimeInfoText.getText());
@@ -526,10 +529,11 @@ public class MySelfRegistration extends AppiumBase {
         fc.DropDownPlaceHolderText.click();
         ut.waitForElementToBeVisible(fc.verifyText);
         takeScreenshot("Work Selection Screen");
+        fc.printWorkOptions();
         fc.selectwork.click();
         // fc.makemoney();
         ut.waitForElementToBeVisible(fc.finance2ndscreenQueTitle);
-        softAssert.assertEquals("How much money do you make in a year?", fc.finance2ndscreenQueTitle.getText());
+        softAssert.assertEquals(fc.finance2ndscreenQueTitle.getText(),fc.expectedYearMoneyQue );
         TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("2nd screen title is : " + fc.finance2ndscreenQueTitle.getText());
         takeScreenshot("Yearly Income");
@@ -552,15 +556,13 @@ public class MySelfRegistration extends AppiumBase {
         softAssert.assertAll();
     }
 
-    @Test(priority = 15, description = "Profession Home")
+    @Test(priority = 22, description = "Profession Home")
     public void profession() {
         ProfessionHome ph = new ProfessionHome(getAppiumDriver());
         Utils ut = new Utils(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
 
-        if (!ph.professionHomeScreenTitle.isDisplayed()) {
-            logger.info("ProfessionPage is not available for Selected Work");
-        } else {
+        if (ph.professionHomeScreenTitle.isDisplayed()) {
             ut.waitForElementToBeVisible(ph.professionHomeScreenTitle);
             takeScreenshot("Profession");
             softAssert.assertEquals("Tell me about your profession.", ph.professionHomeScreenTitle.getText());
@@ -584,10 +586,13 @@ public class MySelfRegistration extends AppiumBase {
             takeScreenshot("search profession");
             // ph.selectjob.click();
             softAssert.assertAll();
+
+        } else {
+            logger.info("ProfessionPage is not available for Selected Work");
         }
     }
 
-    @Test(priority = 16, description = "Profession Industry")
+    @Test(priority = 23, description = "Profession Industry")
     public void industry() throws InterruptedException {
         Utils ut = new Utils(getAppiumDriver());
         ProfessionIndustry pi = new ProfessionIndustry(getAppiumDriver());
@@ -613,7 +618,7 @@ public class MySelfRegistration extends AppiumBase {
 
     }
 
-    @Test(priority = 17, description = "EducationBackground")
+    @Test(priority = 24, description = "EducationBackground")
     public void education() throws InterruptedException {
         Education education = new Education(getAppiumDriver());
         Settings st = new Settings(getAppiumDriver());
@@ -657,7 +662,7 @@ public class MySelfRegistration extends AppiumBase {
         softAssert.assertAll();
     }
 
-    @Test(priority = 18, description = "AddPhotos")
+    @Test(priority = 25, description = "AddPhotos")
     public void photo() throws InterruptedException {
         Photos ph = new Photos(getAppiumDriver());
         Utils ut = new Utils(getAppiumDriver());
@@ -676,16 +681,29 @@ public class MySelfRegistration extends AppiumBase {
         TestListener.logToExtentReport("Just FYI DialogBox msg is : " + ph.DialogBoxMsg.getText());
         ph.okbutn.click();
         ph.tapphoto();
-        ph.selectPhotoFolder.click();
-        ut.swipeToAGivenTextAndClick("Thu, 7 Dec, 2023");
-        ph.selectPhoto.click();
+        ph.DownloadSamsung.click();
+        ph.SamsungPhoto1.click();
+        ut.waitForElementToBeVisible(ph.Plus2);
+        ph.Plus2.click();
+        ph.DownloadSamsung.click();
+        ph.SamsungPhoto2.click();
+        ut.waitForElementToBeVisible(ph.Plus3);
+        ph.Plus3.click();
+        ph.DownloadSamsung.click();
+        ph.SamsungPhoto3.click();
+        ut.waitForElementToBeVisible(ph.Plus4);
+        ph.Plus4.click();
+        ph.DownloadSamsung.click();
+        ph.SamsungPhoto4.click();
         takeScreenshot("PhotoSelection");
+        Thread.sleep(1000);
+        Utils.dragAndDropUsingTouchAction(ph.start,1,ph.end,4);
         continueButton();
         ut.waitForElementWithFluentWait(edit.textGender);
         softAssert.assertAll();
     }
 
-    @Test(priority = 19, description = "EditProfile")
+    @Test(priority = 26, description = "EditProfile")
     public void editProfile() throws InterruptedException {
         EditProfile edit = new EditProfile(getAppiumDriver());
         Utils ut = new Utils(getAppiumDriver());
@@ -699,7 +717,7 @@ public class MySelfRegistration extends AppiumBase {
         softAssert.assertAll();
     }
 
-    @Test(priority = 20, description = "CheckList")
+    @Test(priority = 27, description = "CheckList")
     public void checkList() {
         CheckList list = new CheckList(getAppiumDriver());
 
@@ -709,7 +727,7 @@ public class MySelfRegistration extends AppiumBase {
         ut.swipeToAGivenTextAndClick("Save");
     }
 
-    @Test(priority = 21, description = "Priority")
+    @Test(priority = 28, description = "Priority")
     public void priority() {
         Priority pr = new Priority(getAppiumDriver());
         Utils ut = new Utils(getAppiumDriver());
@@ -718,105 +736,6 @@ public class MySelfRegistration extends AppiumBase {
         continueButton();
     }
 
-    @Test(priority = 22, description = "Setting")
-    public void setting() throws Exception {
-        Utils ut = new Utils(getAppiumDriver());
-        StartPage sp = new StartPage(getAppiumDriver());
-        Loginpage lp = new Loginpage(getAppiumDriver());
-        WaitingList wl = new WaitingList(getAppiumDriver());
-        Settings st = new Settings(getAppiumDriver());
-        Priority pr = new Priority(getAppiumDriver());
-        HomePage home = new HomePage(getAppiumDriver());
-        SoftAssert softAssert = new SoftAssert();
-
-
-        ut.swipeToAGivenTextAndClick("100 words left");
-        // String actualTitle = String.valueOf(wl.textCount);
-        String actualTitle = wl.textCount.getText();
-        TestListener.logToExtentReport(actualTitle);
-        takeScreenshot("Before entering feedback");
-        softAssert.assertTrue(wl.feedbackHeader.isDisplayed());
-        softAssert.assertEquals("Have any feedback?", wl.feedbackHeader.getText());
-        TestListener.handleSoftAssertions(softAssert);
-        wl.feedback();
-        ut.waitForElementToBeVisible(wl.textCount);
-        String expectedTitle = wl.textCount.getText();
-        TestListener.logToExtentReport(expectedTitle);
-        Assert.assertNotEquals(actualTitle, expectedTitle, "Feedback sent");
-        TestListener.handleSoftAssertions(softAssert);
-        takeScreenshot("After entering feedback");
-        softAssert.assertTrue(st.settingbtn.isDisplayed(), "Element present");
-        st.clickonsetting();
-        softAssert.assertTrue(st.prioritybtn.isDisplayed(), "Element present on screen");
-        st.clickonpriority();
-        takeScreenshot("Priority page before editing");
-        Utils.dragAndDrop(pr.start, 6, pr.end, 1);
-        takeScreenshot("After drag and drop");
-        continueButton();
-        st.clickOnQuestions();
-        Thread.sleep(1000);
-        takeScreenshot("Questions field");
-        st.close();
-        softAssert.assertAll();
-
-    }
-
-    @Test(priority = 23, description = "priority with different scenario")
-    public void testPriority() throws InterruptedException {
-        Settings st = new Settings(getAppiumDriver());
-        HomePage home = new HomePage(getAppiumDriver());
-        Priority pr = new Priority(getAppiumDriver());
-        SoftAssert softAssert = new SoftAssert();
-
-
-        st.clickonpriority();
-        softAssert.assertTrue(st.prioritybtn.isDisplayed(), "Element not Found");
-        TestListener.logToExtentReport("element found");
-        pr.changePriorityToUp("Profession", 1);
-        Thread.sleep(1000);
-        takeScreenshot("after change priority through btn");
-        continueButton();
-        softAssert.assertAll();
-    }
-
-    @Test(priority = 24, description = "recommendation")
-    public void recommend() {
-        HomePage home = new HomePage(getAppiumDriver());
-        Utils ut = new Utils(getAppiumDriver());
-
-        home.clickrecommendaation();
-        takeScreenshot("recomendation field");
-        ut.swipeToHorizontal("Missed");
-
-    }
-
-    @Test(enabled = false)
-    public void scroll() throws InterruptedException {
-        StartPage sp = new StartPage(getAppiumDriver());
-        Loginpage lp = new Loginpage(getAppiumDriver());
-        BackgroundBday bday = new BackgroundBday(getAppiumDriver());
-        BackgroundHeight ht = new BackgroundHeight(getAppiumDriver());
-        Priority pr = new Priority(getAppiumDriver());
-        Utils ut = new Utils(getAppiumDriver());
-        SoftAssert softAssert = new SoftAssert();
-        Settings st = new Settings(getAppiumDriver());
-
-
-        sp.clickButton();
-        lp.entermono("7265882882");
-        Utils.tapElementMultipleTimes(bday.TapYearXpath, 2);
-        continueButton();
-       /* bday.scrollDownToMonth("Jan");
-        Thread.sleep(5000);
-        continueButton();
-        TestListener.logToExtentReport("Height Screen Question Title is : "+ht.HeightScreenQueTitle.getText());
-        TestListener.logToExtentReport("Privacy text is : "+ht.heightPrivacyText.getText());
-        softAssert.assertTrue(ht.HeightContainerText.isDisplayed(),"Text not displayed");
-        takeScreenshot("Scroll Height");
-        softAssert.assertAll();*/
-
-
-    }
 
 
     @AfterTest

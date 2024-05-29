@@ -34,7 +34,7 @@ public class Gotra {
 
 
 
-    public String expectedGotraQueTitle="What gotra do you belong to??";
+    public String expectedGotraQueTitle="What gotra do you belong to?";
     public String expectedDropDownPlaceHolder="Write your gotra here";
 
     public String expectedGotraPagePrivacyText="This information will not be\n" +

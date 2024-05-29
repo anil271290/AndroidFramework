@@ -38,7 +38,7 @@ public class OTPService {
     }
 
     public static String getOTPFromServer(String countryCode, String mobileNumber) {
-        String apiUrl = "https://staging-api.commonfriend.com/api/v2/register";
+        String apiUrl = "https://staging-api.commonfriend.com/api/v3/register";
         String responseBody = "";
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {

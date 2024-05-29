@@ -122,7 +122,7 @@
     <string name="low_quality">This photo is too fuzzy. Please send us a sharper, higher-quality image.</string>
     <string name="similar_photo">This photo is already added to your album. Lets try something different.</string>
     <string name="wide_photo">This photo is too wide. Please crop it and share a more square image.</string>
-    <string name="tall_photo">This photo is too tall. Please crop it and share a more square image.</string>
+        <string name="tall_photo">This photo is too tall. Please crop it and share a more square image.</string>
     <string name="invalid_number">Looks like you entered an invalid number. Please check and try again.</string>
     <string name="invite">You've entered your own number. Invite someone else to join!</string>
     <string name=""></string>

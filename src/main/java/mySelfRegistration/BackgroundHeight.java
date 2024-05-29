@@ -30,27 +30,8 @@ public class BackgroundHeight {
     public MobileElement DefaultInchXpath;
     @AndroidFindBy(xpath = "//android.widget.NumberPicker[2]/*[2]")
     public MobileElement InchXpath;
-    public void scrollDownToInches(String targetInch) {
-        String InchLocator = "//*[contains(@text,'0\"')]";
-        MobileElement currentInchElement = driver.findElement(By.xpath(InchLocator));
-        String currentInch = currentInchElement.getText();
 
-        while (!currentInch.equals(targetInch)) {
-            // Identify the element to scroll to (the month picker)
-            MobileElement inchElement = driver.findElement(By.xpath(InchLocator));
 
-            // Create parameters for the mobile:scroll command
-            Map<String, Object> scrollParams = new HashMap<>();
-            scrollParams.put("strategy", "accessibility id"); // Specify the strategy
-            scrollParams.put("selector", inchElement.getAttribute("text")); // Specify the selector
-            scrollParams.put("toVisible", "true");
-
-            // Execute the mobile:scroll command
-            driver.executeScript("mobile:scroll", scrollParams);
-
-            // Update current month after scrolling
-            currentInch = inchElement.getText();
-        }
-    }
+    public String expectedHeightQue="How tall are you?";
 
 }
