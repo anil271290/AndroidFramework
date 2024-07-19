@@ -20,23 +20,31 @@ public class TestListener extends AppiumBase implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        System.out.println(result.getMethod().getMethodName() + " test cases started");
+        System.out.println(result.getMethod().getMethodName() + " test case started");
         ExtentReport.startTest(result.getMethod().getMethodName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        System.out.println("The name of test case passed is: " + result.getMethod().getMethodName());
+        System.out.println("The name of the test case passed is: " + result.getMethod().getMethodName());
         ExtentTest test = getTest();
-        test.log(Status.PASS, "Test passed");
-        // Add additional logs to extent report
-        test.log(Status.INFO, "Additional log message here");
+        if (test != null) {
+            test.log(Status.PASS, "Test passed");
+            test.log(Status.INFO, "Additional log message here");
+        } else {
+            System.err.println("ExtentTest object is null in onTestSuccess.");
+        }
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        System.out.println("The name of the testcase skipped is: " + result.getMethod().getMethodName());
-        getTest().log(Status.SKIP, "Test Skipped");
+        System.out.println("The name of the test case skipped is: " + result.getMethod().getMethodName());
+        ExtentTest test = getTest();
+        if (test != null) {
+            test.log(Status.SKIP, "Test Skipped");
+        } else {
+            System.err.println("ExtentTest object is null in onTestSkipped.");
+        }
     }
 
     @Override
@@ -46,57 +54,71 @@ public class TestListener extends AppiumBase implements ITestListener {
         Throwable throwable = result.getThrowable();
         String failureMessage = "Test failed";
 
-        // Check if the failure is due to an assertion error
         if (throwable instanceof AssertionError) {
             failureMessage = "Assertion failed: " + throwable.getMessage();
-        }else {
-            // If it's not an assertion error, log the actual exception message
+        } else {
             failureMessage = "Exception: " + throwable.getMessage();
         }
 
-        getTest().log(Status.FAIL, failureMessage);
+        ExtentTest test = getTest();
+        if (test != null) {
+            test.log(Status.FAIL, failureMessage);
 
-        Object ob = result.getInstance();
-        AppiumDriver<MobileElement> driver = ((AppiumBase) ob).getAppiumDriver();
+            Object ob = result.getInstance();
+            AppiumDriver<MobileElement> driver = ((AppiumBase) ob).getAppiumDriver();
 
-        // Take screenshot
-        String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) Objects.requireNonNull(driver)).getScreenshotAs(OutputType.BASE64);
+            if (driver != null) {
+                try {
+                    String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+                    test.fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String(base64Screenshot).build());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    test.log(Status.FAIL, "Screenshot capture failed due to: " + e.getMessage());
+                }
+            } else {
+                System.err.println("AppiumDriver is null in onTestFailure.");
+                test.log(Status.FAIL, "AppiumDriver is null, could not capture screenshot.");
+            }
 
-        // Attach screenshot to Extent report
-        try {
-            getTest().fail("Test Failed", MediaEntityBuilder.createScreenCaptureFromBase64String(base64Screenshot).build());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // If failure is due to an assertion, log the assertion message separately
-        if (throwable instanceof AssertionError) {
-            String assertionMessage = "Assertion failed: " + throwable.getMessage();
-            getTest().log(Status.FAIL, assertionMessage);
+            if (throwable instanceof AssertionError) {
+                String assertionMessage = "Assertion failed: " + throwable.getMessage();
+                test.log(Status.FAIL, assertionMessage);
+            }
+        } else {
+            System.err.println("ExtentTest object is null in onTestFailure.");
         }
     }
-
 
     @Override
     public void onFinish(ITestContext context) {
         System.out.println("The " + context.getName() + " is Finished");
         ExtentReport.endTest();
-        ExtentReport.getInstance().flush(); // Flush ExtentReports instance
+        ExtentReport.getInstance().flush();
     }
 
-    // Redirect console output to Extent report
     public static void logToExtentReport(String logMessage) {
-
-        getTest().log(Status.INFO, logMessage);
+        ExtentTest test = getTest();
+        if (test != null) {
+            test.log(Status.INFO, logMessage);
+        } else {
+            System.err.println("ExtentTest object is null in logToExtentReport.");
+        }
     }
 
     public static void handleSoftAssertions(SoftAssert softAssert) {
         try {
             softAssert.assertAll();
         } catch (AssertionError e) {
-            // Log soft assertion failure message
             String assertionMessage = "Soft Assertion failed: " + e.getMessage();
-            getTest().log(Status.FAIL, assertionMessage);
+            ExtentTest test = getTest();
+            if (test != null) {
+                test.log(Status.FAIL, assertionMessage);
+            } else {
+                System.err.println("ExtentTest object is null in handleSoftAssertions.");
+            }
         }
     }
+
+
+
 }

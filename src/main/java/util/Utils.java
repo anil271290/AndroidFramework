@@ -84,7 +84,7 @@ public class Utils {
 
     public void scrollToElementByActionClass(String elementText) {
         try {
-            WebElement element = driver.findElement(By.xpath("//*[contains(@text, '" + elementText + "')]"));
+            WebElement element = driver.findElement(By.xpath("//*[contains(@text, '"+ elementText +"')]"));
 
             Actions actions = new Actions(driver);
             actions.moveToElement(element);
@@ -104,45 +104,17 @@ public class Utils {
         driver.findElement(MobileBy.AndroidUIAutomator(command)).click();
     }
 
-    public void swipeToAGivenXpathAndClick(String elementText) {
-        // Construct the XPath expression to locate the element with the given text
-        String xpathExpression = "//*[contains(@text, ' + elementText + ')]";
 
-        // Scroll to the element using the XPath expression
-        MobileElement element = driver.findElement(By.xpath(xpathExpression));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 
-        // Click on the element
-        element.click();
-    }
 
-    public void scrollToElementInContainer(MobileElement containerXPath, MobileElement targetElementXPath) {
-        // Assuming you have already initialized your AndroidDriver instance
-
-            // Step 1: Identify the container element
-        MobileElement container = driver.findElement(By.xpath(String.valueOf(containerXPath)));
-
-            // Step 2: Identify the target element within the container
-        MobileElement targetElement = container.findElement(By.xpath(String.valueOf(targetElementXPath)));
-
-            // Step 3: Scroll within the container until the target element becomes visible
-        String containerId = container.getAttribute("resourceId");
-        String targetElementId = targetElement.getAttribute("resourceId");
-
-        String scrollCommand = "new UiScrollable(new UiSelector().resourceId(\"" + containerId + "\")).scrollIntoView("
-                + "new UiSelector().resourceId(\"" + targetElementId + "\"));";
-
-        // ((AndroidDriver)driver).findElementByAndroidUIAutomator(scrollCommand);
-        driver.findElement(MobileBy.AndroidUIAutomator(scrollCommand));
-
-    }
 
     public void swipeToHorizontal(String elementText) {
-        String uiSelector = "new UiSelector().textMatches(\"" + elementText
+         String uiSelector = "new UiSelector().textMatches(\"" + elementText
                 + "\")";
         String command = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).setAsHorizontalList().scrollIntoView("
                 + uiSelector + ");";
         driver.findElement(MobileBy.AndroidUIAutomator(command)).click();
+
     }
 
 
@@ -233,4 +205,32 @@ public class Utils {
 
     public void waitForElementToBeVisible(boolean enabled) {
     }
+
+
+
+    public void longPress(String elementXpath) {
+        // Locate the element
+        WebElement element = driver.findElement(By.xpath(elementXpath));
+
+        // Get the center point of the element
+        Point elementCenter = getCenterOfElement(element.getLocation(), element.getSize());
+
+        // Convert coordinates to integers
+        int x = (int) Math.round(elementCenter.getX());
+        int y = (int) Math.round(elementCenter.getY());
+
+        // Create the pointer input for the touch action
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+
+        // Create the sequence for long press
+        Sequence sequence = new Sequence(finger, 1)
+                .addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), x, y))
+                .addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+                .addAction(new Pause(finger, Duration.ofMillis(2000))) // Long press for 1000ms
+                .addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+        // Perform the sequence
+        driver.perform(Collections.singletonList(sequence));
+    }
+
 }

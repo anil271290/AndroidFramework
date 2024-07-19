@@ -5,18 +5,17 @@ import base.TestListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.*;
 import base.AppiumBase;
 import org.testng.asserts.SoftAssert;
-import mySelfRegistration.*;
+import mySelfRegistrationPages.*;
 import util.OTPService;
 import util.Utils;
 
 import java.net.MalformedURLException;
 import java.util.Random;
-import java.util.Set;
+
 
 
 @Listeners(base.TestListener.class)
@@ -29,7 +28,7 @@ public class MySelfRegistration extends AppiumBase {
     @BeforeTest
     public void launchApp() throws MalformedURLException {
         setup();
-        // setupEmulator();
+       // startRecord();
     }
 
     @Test(priority = 1, description = "StartPage")
@@ -91,29 +90,36 @@ public class MySelfRegistration extends AppiumBase {
     }
 
     @Test(priority = 2, description = "IntroductionName")
-    public void introduction() {
+    public void introduction() throws InterruptedException {
         StartPage sp = new StartPage(getAppiumDriver());
         IntroName name = new IntroName(getAppiumDriver());
         Utils ut = new Utils(getAppiumDriver());
         WelcomePage wp = new WelcomePage(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
 
-
+        softAssert.assertEquals(sp.HelloScreenSubtitle.getText(),sp.expectedHelloScreenSubTitle);
+        takeScreenshot("Hello Screem");
+        Thread.sleep(1000);
         sp.MyselfButton.click();
-        // wp.permission1();
-        softAssert.assertEquals(name.IntroHomeTitleText.getText(), name.expectedHomeTitleText);
-        TestListener.handleSoftAssertions((softAssert));
-        TestListener.logToExtentReport("IntroHomePage Title : " + name.expectedHomeTitleText);
-        name.continue1.click();
-        softAssert.assertEquals(name.firstPageQueTitle.getText(), name.expectedFirstPageQueTitle);
-        TestListener.handleSoftAssertions(softAssert);
-        TestListener.logToExtentReport("Introduction 1st page question : " + name.firstPageQueTitle.getText());
-        name.enterfirstname("Raghav");
-        name.enterlastname("Pandey");
-        softAssert.assertEquals(name.privacyText.getText(), getStrings().get("name"));
-        TestListener.handleSoftAssertions(softAssert);
-        takeScreenshot("Name");
-        continueButton();
+        if (isElementDisplayed(wp.allow,30)){
+            wp.permission1();
+        }else {
+
+            softAssert.assertEquals(name.IntroHomeTitleText.getText(), name.expectedHomeTitleText);
+            TestListener.handleSoftAssertions((softAssert));
+            TestListener.logToExtentReport("IntroHomePage Title : " + name.expectedHomeTitleText);
+            name.continue1.click();
+            softAssert.assertEquals(name.firstPageQueTitle.getText(), name.expectedFirstPageQueTitle);
+            TestListener.handleSoftAssertions(softAssert);
+            TestListener.logToExtentReport("Introduction 1st page question : " + name.firstPageQueTitle.getText());
+            name.enterfirstname("Pravin");
+            name.enterlastname("Tambe");
+            softAssert.assertEquals(name.privacyText.getText(), getStrings().get("name"));
+            TestListener.handleSoftAssertions(softAssert);
+            takeScreenshot("Name");
+            continueButton();
+        }
+
         softAssert.assertAll();
 
     }
@@ -131,7 +137,7 @@ public class MySelfRegistration extends AppiumBase {
         softAssert.assertTrue(gender.backArrow.isDisplayed(), "BackArrow not displayed");
         TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("2nd Page Header Title is : " + gender.headerTitle.getText());
-        gender.selectgender(gender.Female);
+        gender.selectgender(gender.Male);
         // continueButton();
         softAssert.assertAll();
     }
@@ -185,7 +191,7 @@ public class MySelfRegistration extends AppiumBase {
         ResidencyStatus rs = new ResidencyStatus(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
 
-        if (isElementDisplayed(rs.validationResidency)) {
+        if (isElementDisplayed(rs.validationResidency,40)) {
             softAssert.assertEquals(rs.FifthPageQueTitle.getText(), rs.expectedResidencyQueText);
             TestListener.handleSoftAssertions(softAssert);
             takeScreenshot("Residency Status Screen");
@@ -262,7 +268,7 @@ public class MySelfRegistration extends AppiumBase {
         takeScreenshot("Relationship");
         ir.relationst();
 
-        if (isElementDisplayed(ir.validationKids)) {
+        if (isElementDisplayed(ir.validationKids,40)) {
             takeScreenshot("Kids Page");
             softAssert.assertEquals(ir.kidsQueTitle.getText(), ir.expectedKidsQueText);
             TestListener.handleSoftAssertions(softAssert);
@@ -330,7 +336,7 @@ public class MySelfRegistration extends AppiumBase {
         Gotra gt = new Gotra(getAppiumDriver());
 
 
-        if (isElementDisplayed(cs.validationCaste)) {
+        if (isElementDisplayed(cs.validationCaste,40)) {
             cs.SkipBtn.click();
             takeScreenshot("");
             getAppiumDriver().navigate().back();
@@ -355,7 +361,7 @@ public class MySelfRegistration extends AppiumBase {
         Gotra gt = new Gotra(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
 
-        if (isElementDisplayed(gt.validationgotra)) {
+        if (isElementDisplayed(gt.validationgotra,40)) {
             gt.SkipBtn.click();
             takeScreenshot("Skip Gotra");
             getAppiumDriver().navigate().back();
@@ -416,7 +422,7 @@ public class MySelfRegistration extends AppiumBase {
         BirthPlace bp = new BirthPlace(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
 
-        if (isElementDisplayed(bp.ValidationBirthPlace)) {
+        if (isElementDisplayed(bp.ValidationBirthPlace,40)) {
             softAssert.assertEquals(bp.BirthPlaceQue.getText(), getStrings().get("BirthPlaceQue"));
             TestListener.handleSoftAssertions(softAssert);
             softAssert.assertEquals(bp.BirthPlacePlaceHolder.getText(), bp.expectedBirthPlace_placeHolder);
@@ -437,7 +443,7 @@ public class MySelfRegistration extends AppiumBase {
     public void birthTime() {
         BackgroundBdayTime bt = new BackgroundBdayTime(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
-        if (isElementDisplayed(bt.ValidationBirthTime)) {
+        if (isElementDisplayed(bt.ValidationBirthTime,40)) {
             softAssert.assertEquals(bt.BirthTimeQue.getText(), getStrings().get("BirthTimeQue"));
             TestListener.handleSoftAssertions(softAssert);
             takeScreenshot("BirthTime");
@@ -449,7 +455,7 @@ public class MySelfRegistration extends AppiumBase {
     }
 
     @Test(priority = 18, description = "BackGround Height")
-    public void height() {
+    public void height() throws InterruptedException {
         Utils ut = new Utils(getAppiumDriver());
         BackgroundHeight ht = new BackgroundHeight(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
@@ -463,7 +469,9 @@ public class MySelfRegistration extends AppiumBase {
         softAssert.assertTrue(ht.HeightContainerText.isDisplayed(), "Text not displayed");
         TestListener.handleSoftAssertions(softAssert);
         takeScreenshot("Scroll Height");
-        Utils.tapElementMultipleTimes(ht.InchXpath, 8);
+        ht.InchCentreXpath.click();
+        Utils.tapElementMultipleTimes(ht.InchXpath, 5);
+        Thread.sleep(500);
         takeScreenshot("Height selected");
         TestListener.logToExtentReport("Hieght scrolled and selected");
         ut.waitForElementToBeVisible(getAppiumDriver().findElement(By.id("com.commonfriend:id/btnContinue")).isEnabled());
@@ -579,16 +587,15 @@ public class MySelfRegistration extends AppiumBase {
             TestListener.handleSoftAssertions(softAssert);
             takeScreenshot("Add Job Title");
             ph.addjobtitle.click();
-            // ph.editjob();
+            ph.editjob();
             // ut.swipeToAGivenTextAndClick("Software Developer");
-            //  ut.scrollToElementByActionClass("Software Developer");
-            ut.swipeToAGivenXpathAndClick("Software Developer");
+            ph.selectjob.click();
             takeScreenshot("search profession");
             // ph.selectjob.click();
             softAssert.assertAll();
 
         } else {
-            logger.info("ProfessionPage is not available for Selected Work");
+            logger.info("Profession Page is not available for Selected Work");
         }
     }
 
@@ -599,9 +606,7 @@ public class MySelfRegistration extends AppiumBase {
         SoftAssert softAssert = new SoftAssert();
         ProfessionHome ph = new ProfessionHome(getAppiumDriver());
 
-        if (!ph.ProfessionHeaderTitle.isDisplayed()) {
-            logger.info("Profession Industry is not available for selected work");
-        } else {
+        if (ph.ProfessionHeaderTitle.isDisplayed()) {
             ut.waitForElementToBeVisible(pi.profession2ndScreenQueTitle);
             TestListener.logToExtentReport("2nd Screen Question Title is : " + pi.profession2ndScreenQueTitle.getText());
             softAssert.assertEquals("Add industry", pi.DropDown2ndScreenPlaceHolderText.getText());
@@ -613,9 +618,12 @@ public class MySelfRegistration extends AppiumBase {
             Thread.sleep(2000);
             takeScreenshot("Select Your Industry");
             pi.addindustry.click();
-            softAssert.assertAll();
-        }
 
+        } else {
+            logger.info("Profession Industry is not available for selected work");
+
+        }
+        softAssert.assertAll();
     }
 
     @Test(priority = 24, description = "EducationBackground")
@@ -697,7 +705,7 @@ public class MySelfRegistration extends AppiumBase {
         ph.SamsungPhoto4.click();
         takeScreenshot("PhotoSelection");
         Thread.sleep(1000);
-        Utils.dragAndDropUsingTouchAction(ph.start,1,ph.end,4);
+        Utils.dragAndDrop(ph.start,1,ph.end,4);
         continueButton();
         ut.waitForElementWithFluentWait(edit.textGender);
         softAssert.assertAll();
@@ -714,16 +722,38 @@ public class MySelfRegistration extends AppiumBase {
         takeScreenshot("Image");
         Thread.sleep(2000);
         ut.swipeToAGivenTextAndClick("Save");
+        ut.waitForElementToBeVisible(edit.DialogBoxHeader);
+        takeScreenshot("DialogBox");
+        edit.TapYes.click();
         softAssert.assertAll();
     }
 
     @Test(priority = 27, description = "CheckList")
-    public void checkList() {
+    public void checkList() throws InterruptedException {
         CheckList list = new CheckList(getAppiumDriver());
 
 
         Utils ut = new Utils(getAppiumDriver());
-        ut.swipeToAGivenTextAndClick("Eating habits");
+        ut.swipeToAGivenTextAndClick("Surname to exclude");
+        list.Specific1.click();
+        list.Specific2.click();
+        ut.waitForElementToBeVisible(list.AddSurNameInclude);
+        list.AddSurNameInclude.sendKeys("patel");
+        list.IncludeAddBtn.click();
+        list.AddSurNameExclude.sendKeys("patel");
+        list.ExcludeAddBtn.click();
+        Thread.sleep(500);
+        takeScreenshot("Surname");
+        ut.swipeToAGivenTextAndClick("Save");
+        Thread.sleep(500);
+        takeScreenshot("Error");
+        TestListener.logToExtentReport("Error Text is : "+list.DialogBoxText.getText());
+        list.OkBtn.click();
+        ut.swipeToAGivenTextAndClick("Surname to include");
+        ut.waitForElementToBeVisible(list.None1);
+        list.None1.click();
+        list.None2.click();
+        takeScreenshot("SurName Option Change");
         ut.swipeToAGivenTextAndClick("Save");
     }
 
@@ -736,11 +766,30 @@ public class MySelfRegistration extends AppiumBase {
         continueButton();
     }
 
+    @Test(priority = 29,description = "WaitList")
+    public void waitList(){
+        WaitingList wl=new WaitingList(getAppiumDriver());
+        Utils ut=new Utils(getAppiumDriver());
+        SoftAssert softAssert=new SoftAssert();
 
+        ut.waitForElementToBeVisible(wl.WaitListText);
+        if (isElementDisplayed(wl.WaitListText,40)){
+            TestListener.logToExtentReport("Your Profile is not approved, wait for some time");
+        }else {
+            TestListener.logToExtentReport("Your Profile is approved");
+        }
+        takeScreenshot("WaitList");
+        ut.swipeToAGivenTextAndClick("Invitations");
+        takeScreenshot("Invitation");
+        wl.invitationField();
+        ut.swipeToAGivenTextAndClick("Add members");
+
+
+    }
 
     @AfterTest
     public void close() {
-
+      //  stopRecord("");
         tearDown();
     }
 }

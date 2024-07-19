@@ -3,14 +3,16 @@ package test;
 import base.AppiumBase;
 import base.ExtentReport;
 import base.TestListener;
-import familyRegistration.AboutAssociate;
-import mySelfRegistration.IntroName;
-import mySelfRegistration.Loginpage;
-import mySelfRegistration.StartPage;
-import mySelfRegistration.WelcomePage;
+import familyRegistrationPages.AboutAssociate;
+import mySelfRegistrationPages.IntroName;
+import mySelfRegistrationPages.Loginpage;
+import mySelfRegistrationPages.StartPage;
+import mySelfRegistrationPages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import util.OTPService;
@@ -18,6 +20,7 @@ import util.Utils;
 
 import java.net.MalformedURLException;
 import java.util.Random;
+@Listeners(base.TestListener.class)
 
 public class AssociateRegistration extends AppiumBase {
 
@@ -26,8 +29,10 @@ public class AssociateRegistration extends AppiumBase {
 
     @BeforeTest
     public void launchApp() throws MalformedURLException {
+
         setup();
-        // setupEmulator();
+        //startRecord();
+
     }
 
     @Test(priority = 1, description = "StartPage")
@@ -38,12 +43,14 @@ public class AssociateRegistration extends AppiumBase {
         OTPService ot = new OTPService(getAppiumDriver());
         Utils ut = new Utils(getAppiumDriver());
         SoftAssert softAssert = new SoftAssert();
+
         softAssert.assertEquals("Who is it for?", sp.startPageScreenTitle.getText());
+        TestListener.handleSoftAssertions(softAssert);
         TestListener.logToExtentReport("StartPage Screen Title is :" + sp.startPageScreenTitle.getText());
 
         ut.waitForElementWithFluentWait(sp.firstButton);
         Thread.sleep(2000);
-        sp.clickButton();
+        sp.firstButton.click();
         softAssert.assertEquals("If required, I shall use this number\n" +
                 "to get in touch.", sp.startPageMiniTitle.getText());
         TestListener.handleSoftAssertions(softAssert);
@@ -59,7 +66,7 @@ public class AssociateRegistration extends AppiumBase {
         String mobileNumber = "61" + String.valueOf(randomSuffix);
         log.entermono(mobileNumber);
         TestListener.logToExtentReport("RandomMobile Number is : +91-" + mobileNumber);
-        takeScreenshot("mobileNo");
+       // takeScreenshot("mobileNo");
         Thread.sleep(2000);
         log.continuebutton();
         Thread.sleep(4000);
@@ -98,20 +105,22 @@ public class AssociateRegistration extends AppiumBase {
 
 
         sp.SomeOneButton.click();
-        wp.permission1();
+       // wp.permission1();
 
 
     }
-    @Test
-    public void associateDetails(){
+    @Test(priority = 3)
+    public void associateDetails() throws InterruptedException {
         AboutAssociate ab=new AboutAssociate(getAppiumDriver());
 
-        ab.FirstNamePlaceHolder.sendKeys("");
-        ab.LastNamePlaceHolder.sendKeys("");
+        ab.ScreenBreakerContinueBtn.click();
+        ab.FirstNamePlaceHolder.sendKeys("shreya");
+        ab.LastNamePlaceHolder.sendKeys("patel");
         continueButton();
-        ab.maleBtn.click();
+        ab.femaleBtn.click();
         ab.ScreenBreakerContinueBtn.click();
         ab.permissionBtn.click();
+        Thread.sleep(500);
         continueButton();
         ab.ProfessionPlaceHolder.click();
         ab.SelectedProfession.click();
@@ -125,6 +134,10 @@ public class AssociateRegistration extends AppiumBase {
 
 
     }
-
+@AfterTest
+    public void closeApp(){
+     //  stopRecord("associate");
+        tearDown();
+}
 
 }
