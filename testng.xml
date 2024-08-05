@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <parameter name="" value=""></parameter>
+    <test name="Registration">
+        <groups>
+            <run>
+                <include name=""/>
+                <exclude name=""/>
+            </run>
+        </groups>
+        <classes>
+            <class name="test.AssociateRegistration">
+                <methods>
+                    <include name="StartPage"/>
+                    <include name="introduction"/>
+                    <include name="associateDetails"/>
+                </methods>
+            </class>
+            <class name="test.MySelfRegistration">
+                <methods>
+                    <include name="StartPage"/>
+                    <include name="introduction"/>
+                    <include name="gender"/>
+                    <include name="locationAccess"/>
+                    <include name="livingLocation"/>
+                    <include name="residenceStatus"/>
+                    <include name="locality"/>
+                    <include name="locationsToSettle"/>
+                    <include name="relationShip"/>
+                    <include name="selectReligion"/>
+                    <include name="backCultures"/>
+                    <include name="caste"/>
+                    <include name="gotraPage"/>
+                    <include name="nativePlace"/>
+                    <include name="birthDay"/>
+                    <include name="birthPlace"/>
+                    <include name="birthTime"/>
+                    <include name="height"/>
+                    <include name="hendicap"/>
+                    <include name="eatingHabit"/>
+                    <include name="money"/>
+                    <include name="profession"/>
+                    <include name="industry"/>
+                    <include name="education"/>
+                    <include name="photo"/>
+                    <include name="editProfile"/>
+                    <include name="checkList"/>
+                    <include name="priority"/>
+                    <include name="waitList"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

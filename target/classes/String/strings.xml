@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Questions_Individual-->
+    <string name="IntroNameQue">What is your name?</string>
+    <string name="IntroGenderQue">Whats your gender?</string>
+    <string name="IntroCurrentLocationQue">What is your current location?</string>
+    <string name="IntroLiveQue">Where do you live?</string>
+    <string name="IntroResidencyQue">What is your residency status?</string>
+    <string name="IntroLocalityQue">Which locality</string>
+    <string name="IntroSettleQue">Where do you plan to settle?</string>
+    <string name="IntroRelationQue">What's your relationship status?</string>
+    <string name="IntroKidsQue">Do you have kids?</string>
+    <string name="ReligionQue">What religion do you follow?</string>
+    <string name="CultureQue">Which cultures do you identify with?</string>
+    <string name="CommunityQue">What community do you belong to?</string>
+    <string name="GotraQue">What gotra do you belong to?</string>
+    <string name="NativeQue">What is your native place?</string>
+    <string name="EatingQue">What are you eating habits?</string>
+    <string name="BirthDayQue">When's your birthday?</string>
+    <string name="BirthPlaceQue">What is your place of birth?</string>
+    <string name="BirthTimeQue">What is your time of birth?</string>
+    <string name="AbilityQue">Are you disabled?</string>
+    <string name="LineOfWorkQue">Line of work?</string>
+    <string name="EarningQue">How much do you earn?</string>
+    <string name="NetWorthQue">What is your net worth?</string>
+    <string name="DesignationQue">What is your designation?</string>
+    <string name="IndustryQue">Which industry?</string>
+    <string name="EducationQue">What are your education details?</string>
+    <string name="PhotoQue">Share a photo with us</string>
+    <string name="PhotoAlbumQue">Share photo album</string>
+
+   <!--Questions_Family-->
+
+    <string name="">Name?</string>
+    <string name="">Whats your gender?</string>
+    <string name="">What is your current location?</string>
+    <string name="">Line of work?</string>
+    <string name="">What is your designation?</string>
+    <string name="">Which industry?</string>
+
+    <!--DropDown Text-->
+
+    <string name="Locations_PlaceHolder">Add locations</string>
+    <string name="Culture_PlaceHolder">Add cultures</string>
+    <string name="Industry_PlaceHolder">Add industry</string>
+    <string name="Degree_PlaceHolder">Add qualification</string>
+    <string name="Collage_PlaceHolder">Add college name</string>
+    <string name="Select_Line_PlaceHolder">Select line of work</string>
+    <string name="Religion_PlaceHolder">Select religion</string>
+    <string name="Add_Job_PlaceHolder">Add job title</string>
+    <string name=""></string>
+
+
+    <!--DialogBox Text-->
+
+    <string name="NetWorth">"Family net worth is the total value of what you and your family own (such as a home, investments, and savings), minus what you owe (such as mortgages, loans, and credit card debt).
+
+        Rest assured, this information will always remain confidential between us and will not be shared, not even with a match. While optional, we've found that providing this information improves the accuracy of our recommendations."</string>
+    <string name="JustFYI">Your photos will undergo verification by me. Only if they meet our guidelines will your profile be approved. Uploading fake or irrelevant photos will be a wasted effort.</string>
+
+    <string name="Discovering_Profiles">Swipe left or right to discovery profiles. Swiping does not accept or reject the profile.</string>
+
+    <string name="Delete_Profile">Your data will be completely deleted within 2 weeks from now.</string>
+
+    <string name="Complete_Profile">There are some information that is required from your side. Complete your profile to start connecting and receiving requests.</string>
+
+    <string name="GetIntroduce">Do you want me to introduce you over a group, or are you up for starting the conversation yourself? Let me know! Remember, you can switch it up later in the 'Settings' section. </string>
+
+    <string name="ChangeAnswer">Once answered, changing the answer is not possible. The best you could do is 'hide' it!</string>
+
+    <string name="ChangeAnswer_HiddenQue">Once answered, changing the answer is not possible.</string>
+
+    <string name="Outside_Location">We're not operational in your location at the moment. Currently, we only operate in Mumbai, Navi Mumbai, Thane, and Pune. I'll reach out to you when we're able to serve you in the future.</string>
+
+
+
+    <!--Privacy Text-->
+
+    <string name="name">Visible to your matches only</string>
+    <string name="gender">Visible to your recommendations only</string>
+    <string name="location">Visible to your recommendations only</string>
+    <string name="settle_location">Visible to your recommendations only</string>
+    <string name="ability">Visible to your recommendations only</string>
+    <string name="relationship">Visible to your recommendations only</string>
+    <string name="kids">Visible to your recommendations only</string>
+    <string name="religion">Visible to your recommendations only</string>
+    <string name="culture">Visible to your recommendations only</string>
+    <string name="food">Visible to your recommendations only</string>
+    <string name="height">Visible to your recommendations only</string>
+    <string name="birthday">Visible to your recommendations only</string>
+    <string name="line_of_work">Visible to your recommendations only</string>
+    <string name="yearly_money">Visible to your recommendations only</string>
+    <string name="industry">Visible to your recommendations only</string>
+    <string name="education">Visible to your recommendations only</string>
+    <string name="photo">Visible to your recommendations only</string>
+    <string name="family_worth">Visible to yourself only</string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+
+    <!--StartPage Text-->
+
+    <string name="Mobile_Number">What's your mobile number?</string>
+    <string name="Get_In_Touch">If required, I shall use this number to get in touch.</string>
+    <string name="Verification_Code">I will send you a text with a verification code.</string>
+    <string name="Otp">To verify your phone number, I have sent you a 4 digit OTP at </string>
+    <string name="Terms">By login in you agree to the 'Terms' and 'Privacy policy'</string>
+    <string name=""></string>
+
+    <!--ProgressBar Text-->
+    <string name="Introduction">Let's start with an introduction.</string>
+    <string name="Background">Now, let's dive into your background.</string>
+    <string name="Finances">Money matters! Lets discuss it.</string>
+    <string name="Profession">Tell me about your profession.</string>
+    <string name="Education">Let's explore your educational background.</string>
+    <string name="Photo_Album">And finally, share your photos that you'd like.</string>
+    <string name="Edit_Profile">Confirm your profile details before we get started!</string>
+
+
+    <!--Error Text-->
+    <string name="low_quality">This photo is too fuzzy. Please send us a sharper, higher-quality image.</string>
+    <string name="similar_photo">This photo is already added to your album. Lets try something different.</string>
+    <string name="wide_photo">This photo is too wide. Please crop it and share a more square image.</string>
+        <string name="tall_photo">This photo is too tall. Please crop it and share a more square image.</string>
+    <string name="invalid_number">Looks like you entered an invalid number. Please check and try again.</string>
+    <string name="invite">You've entered your own number. Invite someone else to join!</string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+
+
+
+</resources>
